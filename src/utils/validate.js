@@ -15,7 +15,11 @@ const checkValidation = (name, email, password) => {
     /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password);
   if (!isValidPassword) error.password = "Password is invalid";
 
-  return error;
+  if (Object.keys(error).length === 0) {
+    return null;
+  } else {
+    return error;
+  }
 };
 
 export default checkValidation;

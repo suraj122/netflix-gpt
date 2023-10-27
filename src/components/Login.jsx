@@ -1,11 +1,16 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import checkValidation from "../utils/validate";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const formRef = useRef();
+  const [submissionError, setSubmissionError] = useState("");
   const name = useRef("");
   const email = useRef("");
   const password = useRef("");
@@ -19,14 +24,47 @@ const Login = () => {
       password.current.value
     );
     setErrorMessage(message);
-  };
+    // Sign in / Signup logic
+    if (message) return;
 
+    if (!isSignIn) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setSubmissionError(errorMessage);
+        });
+    } else {
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setSubmissionError(errorMessage);
+        });
+    }
+  };
   return (
     <section className="bg-netflix-img h-screen">
       <Header />
       <div className="pb-24">
         <div className="max-w-md w-full mx-auto bg-black bg-opacity-70 p-12">
-          <form onSubmit={handleForm} action="" ref={formRef}>
+          <form onSubmit={handleForm}>
             <legend className="font-semibold text-3xl text-white mb-12">
               {isSignIn ? "Sign In" : "Sign Up"}
             </legend>
@@ -62,10 +100,12 @@ const Login = () => {
             <p className="text-red-500 mt-1">
               {errorMessage && errorMessage.password}
             </p>
+            <p className="text-red-500 mt-1">{submissionError}</p>
             <button className="text-white bg-red-500 rounded-md w-full text-center py-2 px-3 text-xl mt-8">
               {isSignIn ? "Sign In" : "Sign Up"}
             </button>
           </form>
+
           <p className="mt-4">
             <span className="text-gray-300">
               {isSignIn ? "New to Netflix?" : "Already Registered?"}
