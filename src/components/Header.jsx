@@ -5,6 +5,7 @@ import { auth } from "../utils/firebase";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
+import { LOGO } from "../utils/constants";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
@@ -36,16 +37,13 @@ const Header = () => {
         navigate("/");
       }
     });
+    return () => unsubscribe();
   }, []);
 
   return (
     <header className="py-6">
       <div className="container mx-auto px-12 flex justify-between items-center">
-        <img
-          className="w w-44"
-          src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
-          alt=""
-        />
+        <img className="w w-44" src={LOGO} alt="Netflix Logo" />
         {user && (
           <div className="flex items-center">
             {user.photoURL ? (
