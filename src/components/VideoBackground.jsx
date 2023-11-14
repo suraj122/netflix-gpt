@@ -8,12 +8,12 @@ const VideoBackground = ({ movieId }) => {
   const { key } = trailer;
   return (
     <iframe
-      className="aspect-video w-full absolute left-0 top-0"
-      src={`https://www.youtube.com/embed/${key}?autoplay=1&mute=1&?modestbranding=1&showinfo=0&si=1JM2c2cZMugG8Xv6`}
+      className="aspect-video w-full left-0 top-0"
+      src={`https://www.youtube.com/embed/${key}?autoplay=1&mute=1&loop=1?modestbranding=1&showinfo=0&si=1JM2c2cZMugG8Xv6`}
       title="YouTube video player"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       allowFullScreen
-      frameBorder="0"
+      frameBorder="2"
     ></iframe>
   );
 };

@@ -9,8 +9,8 @@ const Hero = () => {
   const mainMovie = movies[0];
   const { title, id, overview } = mainMovie;
   return (
-    <section className="relative pt-24">
-      <div className="container mx-auto px-12">
+    <section className="relative">
+      <div className="">
         <MovieInfo title={title} overview={overview} />
         <VideoBackground movieId={id} />
       </div>
