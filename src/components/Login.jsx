@@ -81,7 +81,7 @@ const Login = () => {
     }
   };
   return (
-    <section className="bg-netflix-img h-screen">
+    <section className="bg-netflix-img h-screen pt-28">
       <Header />
       <div className="pb-24">
         <div className="max-w-md w-full mx-auto bg-black bg-opacity-70 p-12">

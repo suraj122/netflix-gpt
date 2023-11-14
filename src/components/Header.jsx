@@ -41,7 +41,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="py-6">
+    <header className="py-6 absolute w-full top-0 z-50">
       <div className="container mx-auto px-12 flex justify-between items-center">
         <img className="w w-44" src={LOGO} alt="Netflix Logo" />
         {user && (
@@ -58,7 +58,7 @@ const Header = () => {
 
             <button
               onClick={handleSingout}
-              className="border px-2 py-1 ml-2 text-sm border-black rounded hover:bg-black hover:text-white"
+              className="border px-2 py-1 ml-2 text-sm text-white border-white rounded hover:bg-white hover:text-black"
             >
               Sign out
             </button>
