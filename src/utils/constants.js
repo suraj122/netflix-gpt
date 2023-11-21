@@ -14,3 +14,9 @@ export const API_OPTIONS = {
 };
 
 export const MOVIE_POSTER_CDN = "https://image.tmdb.org/t/p/w500";
+
+// export const GPT_API_KEY =
+//   "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";
+
+export const GPT_API_KEY =
+  "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";

@@ -1,0 +1,40 @@
+import { useDispatch } from "react-redux";
+import { API_OPTIONS } from "../utils/constants";
+import { addMovieResults } from "../utils/searchSlice";
+import openai from "../utils/openAi";
+
+const useGptSearch = (searchText) => {
+  const dispatch = useDispatch();
+  const searchTmdb = async (movie) => {
+    const data = await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${movie}&include_adult=false&language=en-US&page=1`,
+      API_OPTIONS
+    );
+
+    const json = await data.json();
+    return json.results;
+  };
+
+  const handleGptSearch = async (e) => {
+    e.preventDefault();
+    // console.log(searchText.current.value);
+    const gptQuery =
+      "Act as a movie recommendation system and suggest some movies for the query: " +
+      searchText.current.value +
+      ". Only give me names of 5 movies, comma separated like the example result given ahead. Example results: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
+    const gptResults = await openai.chat.completions.create({
+      messages: [{ role: "user", content: gptQuery }],
+      model: "gpt-3.5-turbo",
+    });
+    const gptMovies = gptResults?.choices[0]?.message.content.split(",");
+
+    const tmdbResult = gptMovies.map((movie) => searchTmdb(movie));
+    const tmdbMovieResult = await Promise.all(tmdbResult);
+    dispatch(
+      addMovieResults({ movieNames: gptMovies, movieResults: tmdbMovieResult })
+    );
+  };
+  return handleGptSearch;
+};
+
+export default useGptSearch;
