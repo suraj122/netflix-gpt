@@ -8,8 +8,7 @@ export const API_OPTIONS = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4ZWVlYTFjMTUyZDQ3ZmQwNzU0MzA5NjcyOWJkNmU4OCIsInN1YiI6IjY1NDM5ZTE1MWFjMjkyMDEzYjYxNDMyYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.FmJxx6ZjEFm0adQn8OOZvRq1xZ9RKizMA9sKcSyx0xs",
+    Authorization: `Bearer ${import.meta.env.VITE_TMDB_API_KEY}`,
   },
 };
 
@@ -18,5 +17,4 @@ export const MOVIE_POSTER_CDN = "https://image.tmdb.org/t/p/w500";
 // export const GPT_API_KEY =
 //   "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";
 
-export const GPT_API_KEY =
-  "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";
+export const GPT_API_KEY = import.meta.env.VITE_OPENAI_KEY;

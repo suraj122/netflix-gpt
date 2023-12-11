@@ -7,7 +7,7 @@ const MovieSuggestions = () => {
   if (!movieResults) <h1>Loading</h1>;
   return (
     <section className="bg-black -mt-80">
-      {movieNames.map((name, index) => (
+      {movieNames?.map((name, index) => (
         <MovieList key={name} title={name} movieList={movieResults[index]} />
       ))}
     </section>
